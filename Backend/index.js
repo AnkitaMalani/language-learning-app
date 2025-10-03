@@ -2,6 +2,7 @@ import express from 'express';
 import './db/index.js';
 import errorHandler from './middleware/errorHandlers.js';
 import userRouter from './routers/userRouter.js';
+import lessonRouter from './routers/LessonRouter.js';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -9,6 +10,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 app.use('/users', userRouter);
+app.use('/lesson', lessonRouter);
 
 app.use('*splat', (req, res) => {
   throw new Error('Not found', { cause: 404 });

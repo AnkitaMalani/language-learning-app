@@ -6,4 +6,10 @@ const userSchema = z.object({
   password: z.string().min(8)
 });
 
-export { userSchema };
+const lessonSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Title is required'),
+  content: z.string().min(1, 'Title is required')
+});
+
+export { userSchema, lessonSchema };
