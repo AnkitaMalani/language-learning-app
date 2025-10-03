@@ -6,4 +6,4 @@ const userSchema = z.object({
   password: z.string().min(8)
 });
 
-export { userSchema};
+export { userSchema };
