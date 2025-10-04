@@ -1,17 +1,16 @@
 import { isValidObjectId } from 'mongoose';
-import Lesson from '../models/Lesson.js';
+import Lesson from '../models/lesson.js';
 import User from '../models/User.js';
-import * as bcrypt from 'bcrypt';
 
 const getLesson = async (req, res) => {
-  const users = await Lesson.find();
-  res.json(users);
+  const lesson = await Lesson.find();
+  res.json(lesson);
 };
 
 const createLesson = async (req, res) => {
   const { userId } = req.sanitizedBody;
 
-  const found = await Lesson.findOne({ userId });
+  const found = await User.findOne({ userId });
 
   if (!found) throw new Error('User not found', { cause: 404 });
 

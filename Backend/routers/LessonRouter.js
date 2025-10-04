@@ -2,11 +2,10 @@ import { Router } from 'express';
 import validateBody from '../middleware/validateBody.js';
 import { lessonSchema } from '../zod/schemas.js';
 import { getLesson, getIdByLesson, createLesson, updateLesson, deleteLesson } from '../controllers/lesson.js';
-import { getUsers } from '../controllers/users.js';
 
 const lessonRouter = Router();
 
-lessonRouter.route('/').get(getUsers).post(validateBody(lessonSchema), createLesson);
+lessonRouter.route('/').get(getLesson).post(validateBody(lessonSchema), createLesson);
 
 lessonRouter.route('/:id').get(getIdByLesson).put(validateBody(lessonRouter), updateLesson).delete(deleteLesson);
 

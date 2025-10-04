@@ -21,11 +21,11 @@ const lessonSchema = new Schema(
       default: 'Beginner'
     },
     quiz: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Quiz' // Reference to quiz collection
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User' // Optional reference to creator
     }
   },
