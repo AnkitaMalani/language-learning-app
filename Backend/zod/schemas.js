@@ -1,7 +1,8 @@
 import { number, z } from 'zod';
 
 const userSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  firstName: z.string().min(1, 'FirstName is required'),
+  lastName: z.string().min(1, 'LastName is required'),
   email: z.email('Invalid Email'),
   password: z.string().min(8)
 });
@@ -22,10 +23,11 @@ const questionSchema = z.object({
 });
 
 const quizSchema = z.object({
-  lesson: z.string().min(1, "Lesson ID is required"), 
+  lessonId: z.string().min(1, "Lesson ID is required"), 
   difficulty: z.enum(["Beginner", "Intermediate", "Advanced"]).default("Beginner"),
   questions: z.array(questionSchema).min(1, "At least one question is required"),
 });
 
+export const signInSchema = userSchema.omit({ firstName: true, lastName: true });
 
 export { userSchema, lessonSchema, quizSchema };

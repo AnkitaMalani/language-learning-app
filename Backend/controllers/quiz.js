@@ -2,27 +2,37 @@ import { isValidObjectId } from 'mongoose';
 import Quiz from '../models/Quiz.js';
 import Lesson from '../models/lesson.js';
 
-const getQuiz = async (require, res) => {
-  const quiz = Lesson.find();
-  res.json(Quiz);
+const getQuiz = async (req, res) => {
+  const quiz = await Quiz.find().populate('lesson');
+  res.json(quiz);
 };
 
 const createQuiz = async (req, res) => {
-  const { lessonId, questions, difficulty } = req.sanitizedBody;
+   const { lessonId, questions, difficulty } = req.sanitizedBody;
 
-  const lesson = await Lesson.findById({ lessonId });
+  if (!isValidObjectId(lessonId)) {
+    throw new Error("Invalid lesson ID", { cause: 400 });
+  }
 
-  if (!lesson) throw new Error('User not found', { cause: 404 });
+  const lesson = await Lesson.findById(lessonId);
+  if (!lesson) {
+    throw new Error("Lesson not found", { cause: 404 });
+  }
 
   const quiz = await Quiz.create({
     lesson: lessonId,
     questions,
-    difficulty
+    difficulty,
   });
+
   lesson.quiz = quiz._id;
   await lesson.save();
 
-  res.json(lesson);
+  res.status(201).json({
+    message: "Quiz created successfully",
+    quiz,
+    lesson,
+  });
 };
 
 const getQuizById = async (req, res) => {

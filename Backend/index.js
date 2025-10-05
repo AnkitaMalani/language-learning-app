@@ -4,6 +4,7 @@ import errorHandler from './middleware/errorHandlers.js';
 import userRouter from './routers/userRouter.js';
 import lessonRouter from './routers/LessonRouter.js';
 import quizRouter from './routers/quizRouter.js';
+import authRouter from './routers/authRouter.js';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/users', userRouter);
 app.use('/lesson', lessonRouter);
 app.use('/quiz', quizRouter);
+app.use('/auth',authRouter);
 
 app.use('*splat', (req, res) => {
   throw new Error('Not found', { cause: 404 });
